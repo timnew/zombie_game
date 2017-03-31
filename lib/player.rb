@@ -37,12 +37,12 @@ class Player
     antidote_count > 0
   end
 
-  def touch(another_player)
-    interact(another_player)
-    another_player.interact(self)
+  def interact(another_player)
+    update_player(another_player)
+    another_player.update_player(self)
   end
 
-  def antidote
+  def apply_antidote
     return unless antidote?
     @antidote_count -= 1
 
@@ -55,7 +55,7 @@ class Player
 
   protected
 
-  def interact(another_player)
+  def update_player(another_player)
     if zombie?
       another_player.infect
     else

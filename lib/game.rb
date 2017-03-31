@@ -1,28 +1,30 @@
-
 class Game
   def self.run(file)
-    Game.new do |g|
-      File.open(file, 'r') do |f|
-        f.each_line do |line|
-          args = line.split(' ').compact
+    game = Game.new
 
-          next if args.empty?
-
-          cmd = args.shift.downcase
-          next if cmd.start_with?('#')
-
-          g.send(cmd, *args)
-        end
-      end
+    File.open(file, 'r') do |f|
+      game.run_script(f)
     end
+
+    game
   end
 
   attr_reader :players
 
   def initialize
     @players = {}
+  end
 
-    yield self if block_given?
+  def run_script(script)
+    DSL.run_script(self, script)
+  end
+
+  def get_player(name)
+    players[name]
+  end
+
+  def add_player(name, race)
+    players[name] = Player.new(name, race)
   end
 
   def zombies
@@ -33,48 +35,42 @@ class Game
     players.values.select(&:human?)
   end
 
-  def human(name)
-    players[name] = Player.new(name, :human)
-  end
-
-  def zombie(name)
-    players[name] = Player.new(name, :zombie)
-  end
-
-  def touch(from, to)
-    players[from].touch(players[to])
-  end
-  alias t touch
-
-  def antidote(player)
-    players[player].antidote
-  end
-  alias a antidote
-
   def next_round
     players.values.each(&:next_round)
   end
-  alias nr next_round
 
   def report
-    puts 'Players: '
+    puts Rainbow('Players: ').bright.white
     players.values.each do |p|
-      puts "  #{p.name}: #{p.status}"
+      puts "  #{Rainbow(p.name.titleize).yellow}: #{colorize_status(p.status)} #{p.score}"
     end
+    puts "\n#{Rainbow('Zombie').red}: #{Rainbow(zombies.count).bright.white}  #{Rainbow('Humans').green}: #{Rainbow(humans.count).bright.white}\n\n"
 
-    puts "Zombie: #{zombies.count} Humans: #{humans.count}\n\n"
-    puts 'Top 5 humans:'
+    puts Rainbow('Top 5 humans:').bright.white
     humans.sort_by(&:score).reverse.take(5).each do |p|
-      puts "  #{p.name}: #{p.score}"
+      puts "  #{Rainbow(p.name).yellow}: #{Rainbow(p.score).bright.white}"
     end
+    puts "\n\n"
 
     if humans.empty?
-      puts 'Zombies win'
+      puts Rainbow('Zombies win').bright.red
     end
 
     if humans.one?
       winner = humans.first
-      puts "#{winner.name} won with score #{winner.score}"
+      puts "#{Rainbow(winner.name).bright.green} won with score #{Rainbow(winner.score).bright.blue}"
+    end
+  end
+
+  protected
+
+  def colorize_status(player_status)
+    case player_status
+    when :human then Rainbow('Human').green.bright
+    when :zombie then Rainbow('Zombie').red.bright
+    when :temporary_infected then Rainbow('Infected').red
+    when :permanent_infected then Rainbow('Infected').red.bright
+    else Rainbow('Unknown').magenta
     end
   end
 end

@@ -1,2 +1,5 @@
+require 'rainbow'
+require 'active_support/core_ext/string/inflections'
 require_relative './player'
+require_relative 'game/dsl'
 require_relative './game'

@@ -1,8 +1,8 @@
 # Player List
-HUMAN Tim
-HUMAN A
-HUMAN B
-ZOMBIE C
+HUMAN tim
+HUMAN a
+HUMAN b
+ZOMBIE c
 
 # TOUCH <player>
 # t <player>
@@ -12,6 +12,10 @@ ZOMBIE C
 
 # NEXT_ROUND
 # nr
-t C A
-t A B
-a A
+t c a
+t a b
+# a a
+nr
+nr
+nr
+nr
