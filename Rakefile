@@ -1,5 +1,4 @@
 require 'yaml'
-require 'pry'
 
 class Player
   attr_reader :name, :score, :race, :antidote_count
