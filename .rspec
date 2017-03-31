@@ -1,2 +1,3 @@
 --color
+--require ./lib/zombie_game
 --require spec_helper
