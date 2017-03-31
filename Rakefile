@@ -2,10 +2,10 @@ require 'yaml'
 require './lib/zombie_game'
 
 desc 'Create the script for a new game'
-task :new_game, [:game_file, :player_config] do |t, args|
-  args.with_defaults(game_file: 'game.txt', player_config: 'players.yml')
+task :new_game, [:script_file, :config_file] do |t, args|
+  args.with_defaults(script_file: 'game.txt', config_file: 'config.yml')
 
-  config = YAML.load_file args[:player_config]
+  config = YAML.load_file args[:config_file]
 
   players = config['players']
   zombies = []
@@ -14,7 +14,7 @@ task :new_game, [:game_file, :player_config] do |t, args|
     zombies << players.delete_at(rand(players.size))
   end
 
-  File.open(args[:game_file], 'w') do |f|
+  File.open(args[:script_file], 'w') do |f|
     f.puts '# Player List'
     players.each do |p|
       f.puts "HUMAN #{p}"
@@ -34,20 +34,22 @@ task :new_game, [:game_file, :player_config] do |t, args|
 # NEXT_TURN
 # nt
 
-GAME_START
     EOD
+
+    f.puts "GAME_START #{config['total_turns']}"
   end
 
-  sh "cat #{args[:game_file]}"
+  Rake::Task[:run].execute
 end
 
 desc 'Run the game'
-task :run, [:game_file] do |t, args|
-  args.with_defaults(game_file: 'game.txt')
+task :run, [:script_file] do |t, args|
+  sh 'clear'
+  args.with_defaults(script_file: 'game.txt')
 
   game = Game.new(Game::TerminalReporter)
-  game.dsl.run_script_file(args[:game_file])
-  game.final_report
+  game.dsl.run_script_file(args[:script_file])
+  game.report
 end
 
 task :default => [:run]

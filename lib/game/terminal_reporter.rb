@@ -37,7 +37,6 @@ class Game
       print_top_zombies
     end
 
-
     def final_report
       return error_report if error?
       return unless game.finished?
@@ -59,6 +58,29 @@ class Game
       print_result
       puts
     end
+
+    def report
+      return error_report if error?
+      print_hr
+      puts
+
+      print_title('Game Status Report')
+
+      print_player_list
+      print_player_division
+
+      print_top_humans
+      print_top_zombies
+
+      return unless game.finished?
+
+      print_hr
+      puts
+
+      print_result
+      puts
+    end
+
 
     def error_report
       print_hr
@@ -84,7 +106,7 @@ class Game
     def print_player_list
       puts caption('Players: ')
       players.each do |p|
-        puts "  #{p.display_name}: #{p.role.display_name} #{p.display_scores}"
+        puts "  #{p.display_name}: #{p.role.display_name} A:#{p.display_antidotes} S:#{p.display_scores}"
       end
     end
 
@@ -164,6 +186,10 @@ class Player
 
   def display_scores
     Rainbow(scores).bright.white
+  end
+
+  def display_antidotes
+    Rainbow(antidotes).bright.blue
   end
 
   class Human

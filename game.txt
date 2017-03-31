@@ -13,20 +13,21 @@ ZOMBIE Jack
 # NEXT_TURN
 # nt
 
-GAME_START
+GAME_START 5
 
 t jack tim
-t jack mary
+t mary suca
+t tim mary
 a tim
 nt
 
-t tim suca
 t jack mary
+t tim jack
+a mary
 nt
 
-nt
-nt
-nt
-
-t mary suca
+t jack suca
+t jack mary
+a suca
+a mary
 nt

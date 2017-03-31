@@ -57,4 +57,4 @@ build-iPhoneSimulator/
 .byebug_history
 
 game.txt
-players.yml
+config.yml

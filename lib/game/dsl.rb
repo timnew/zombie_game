@@ -31,8 +31,8 @@ class Game
       game.add_player(name, Player::Zombie)
     end
 
-    def game_start
-      game.initial_report
+    def game_start(total_turn)
+      game.start(total_turn.to_i)
     end
 
     def interact(player1, player2)
