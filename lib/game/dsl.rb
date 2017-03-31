@@ -7,7 +7,7 @@ class Game
     end
 
     def run_script(script)
-      script.each do |line|
+      script.each.with_index do |line, line_no|
         args = line.split(' ').compact
 
         next if args.empty?
@@ -18,7 +18,7 @@ class Game
         begin
           public_send(cmd, *args)
         rescue NoMethodError, ArgumentError
-          puts "[#{Rainbow('ERROR').red}] Invalid instruction: #{Rainbow(line).cyan}\n"
+          game.error DSLError.new(line, line_no)
         end
       end
     end

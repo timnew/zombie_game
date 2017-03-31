@@ -1,7 +1,11 @@
 class Game
-  attr_reader :dsl
+  autoload(:DSL, 'game/dsl')
+  autoload(:DSLError, 'game/dsl_error')
+
+  attr_reader :dsl, :errors
 
   def initialize
+    @errors = []
     @players = {}
 
     @dsl = DSL.new(self)
@@ -37,6 +41,10 @@ class Game
 
   def winner_force
     humans.empty? ? :zombie : :human
+  end
+
+  def error(err)
+    errors << err
   end
 
   def next_round

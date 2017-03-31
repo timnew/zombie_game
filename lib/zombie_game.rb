@@ -2,7 +2,8 @@ require 'forwardable'
 
 require 'rainbow'
 
-require_relative './player'
-require_relative 'console_report'
-require_relative 'game/dsl'
-require_relative './game'
+$LOAD_PATH << File.dirname( __FILE__)
+
+require 'player'
+require 'game'
+require 'console_report'

@@ -1,8 +1,9 @@
+
 class ConsoleReport
   extend Forwardable
 
   attr_reader :game
-  delegate [:players, :humans, :zombies, :top_human_players, :finished?, :winner_force] => :game
+  delegate [:players, :humans, :zombies, :top_human_players, :finished?, :winner_force, :errors] => :game
 
   def initialize(game)
     @game = game
@@ -15,6 +16,8 @@ class ConsoleReport
     print_top_humans
 
     print_result if finished?
+
+    print_error unless errors.empty?
   end
 
   def print_player_list
@@ -44,6 +47,18 @@ class ConsoleReport
       end
     when :zombie
       puts Rainbow('Zombies win').bright.red
+    end
+  end
+
+  def print_error
+    puts "\n"
+
+    errors.each do |err|
+      if err.respond_to? :print_console
+        err.print_console
+      else
+        puts "[#{Rainbow('Error').bright.red}] #{err.message}"
+      end
     end
   end
 
