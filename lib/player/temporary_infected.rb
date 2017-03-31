@@ -30,7 +30,6 @@ class Player
     def next_turn
       @infectness += 1
       player.update_role PermanentInfected.new if @infectness > 3
-      player.reset_scores
     end
   end
 end
