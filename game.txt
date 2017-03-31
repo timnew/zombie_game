@@ -1,8 +1,8 @@
 # Player List
-HUMAN tim
-HUMAN a
-HUMAN b
-ZOMBIE c
+HUMAN Tim
+HUMAN Jack
+HUMAN Mary
+ZOMBIE Suca
 
 # TOUCH <player>
 # t <player>
@@ -12,10 +12,7 @@ ZOMBIE c
 
 # NEXT_ROUND
 # nr
-t c a
-t a b
-# a a
-nr
-nr
-nr
-nr
+
+t tim jack
+t mary suca
+a suca
