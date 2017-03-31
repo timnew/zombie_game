@@ -2,17 +2,50 @@ class Game
   class TerminalReporter
     extend Forwardable
 
-    attr_reader :game
-    delegate [:players, :humans, :zombies, :top_humans, :top_zombies, :finished?, :winner_force, :errors] => :game
+    attr_reader :game, :errors
+    delegate [:players, :humans, :zombies, :top_humans, :top_zombies, :finished?, :winner_force] => :game
 
     def initialize(game)
+      @errors = []
       @game = game
     end
 
-    def report(title = nil)
-      puts caption("===========================================================\n")
-      puts caption(title)
-      puts caption('-' * title.length + "\n")
+    def error?
+      !errors.empty?
+    end
+
+    def initial_report
+      return if error?
+
+      print_title('Game Started')
+
+      print_player_list
+      print_player_division
+    end
+
+    def turn_report(turn_index)
+      return if error?
+      print_hr
+      puts
+
+      print_title("Turn #{turn_index}")
+
+      print_player_list
+      print_player_division
+
+      print_top_humans
+      print_top_zombies
+    end
+
+
+    def final_report
+      return error_report if error?
+      return unless game.finished?
+
+      print_hr
+      puts
+
+      print_title('Game finished')
 
       print_player_list
       print_player_division
@@ -20,10 +53,32 @@ class Game
       print_top_humans
       print_top_zombies
 
-      print_result if finished?
+      print_hr
+      puts
 
-      print_error unless errors.empty?
-      puts caption("===========================================================\n")
+      print_result
+      puts
+    end
+
+    def error_report
+      print_hr
+      print_title('Game Error')
+
+      print_error
+    end
+
+    def append_error(error)
+      errors << error
+    end
+
+    protected
+
+    def print_hr
+      puts "#{caption('=' * 20)}\n"
+    end
+
+    def print_title(text)
+      puts "--#{'-' * text.length}--\n  #{caption(text)}  \n--#{'-' * text.length}--\n"
     end
 
     def print_player_list
@@ -75,8 +130,6 @@ class Game
         puts "[#{Rainbow('Error').bright.red}] #{err_message}"
       end
     end
-
-    protected
 
     def caption(text)
       Rainbow(text).bright.white

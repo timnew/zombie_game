@@ -5,19 +5,18 @@ class Game
   autoload(:DSLError, 'game/dsl_error')
   autoload(:TerminalReporter, 'game/terminal_reporter')
 
-  attr_reader :round_index, :errors
+  attr_reader :turn_index, :errors
 
   attr_reader :dsl, :reporter
-  delegate [:report] => :reporter
+  delegate [:initial_report, :turn_report, :final_report, :append_error] => :reporter
 
   def initialize(reporter)
-    @round_index = 0
+    @turn_index = 0
     @errors = []
     @players = {}
 
     @dsl = DSL.new(self)
     @reporter = reporter.new(self)
-
   end
 
   def players
@@ -58,12 +57,8 @@ class Game
 
   def next_turn
     players.each(&:next_turn)
-    report("Round #{round_index} Report")
+    turn_report(turn_index)
 
-    @round_index += 1
-  end
-
-  def error(err)
-    errors << err
+    @turn_index += 1
   end
 end

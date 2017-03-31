@@ -18,7 +18,7 @@ class Game
         begin
           public_send(cmd, *args)
         rescue NoMethodError, ArgumentError
-          game.error DSLError.new(line, line_no)
+          game.append_error DSLError.new(line, line_no)
         end
       end
     end
@@ -32,7 +32,7 @@ class Game
     end
 
     def game_start
-      game.report('Game Start Report')
+      game.initial_report
     end
 
     def interact(player1, player2)

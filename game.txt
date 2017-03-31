@@ -1,8 +1,8 @@
 # Player List
 HUMAN Tim
-HUMAN Jack
+HUMAN Mary
 HUMAN Suca
-ZOMBIE Mary
+ZOMBIE Jack
 
 # TOUCH <player>
 # t <player>
@@ -10,12 +10,23 @@ ZOMBIE Mary
 # ANTIDOTE <player>
 # a <player>
 
-# next_turn
-# nr
+# NEXT_TURN
+# nt
 
 GAME_START
 
-t mary tim
-t jack suca
+t jack tim
+t jack mary
 a tim
-nr
+nt
+
+t tim suca
+t jack mary
+nt
+
+nt
+nt
+nt
+
+t mary suca
+nt

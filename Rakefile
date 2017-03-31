@@ -47,7 +47,7 @@ task :run, [:game_file] do |t, args|
 
   game = Game.new(Game::TerminalReporter)
   game.dsl.run_script_file(args[:game_file])
-  game.report('Final Result Report')
+  game.final_report
 end
 
 task :default => [:run]
