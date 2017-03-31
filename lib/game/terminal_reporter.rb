@@ -118,7 +118,7 @@ class Game
     def print_top_humans
       puts caption('Top 5 humans: ')
       top_humans.take(5).each do |p|
-        puts "  #{p.display_name}: #{p.display_scores} handshakes"
+        puts "  #{p.display_name}: #{p.display_handshakes} handshakes"
       end
       puts "\n"
     end
@@ -126,7 +126,7 @@ class Game
     def print_top_zombies
       puts caption('Top 5 Zombies: ')
       top_zombies.take(5).each do |p|
-        puts "  #{p.display_name}: #{p.display_scores} infections"
+        puts "  #{p.display_name}: #{p.display_infections} infections"
       end
       puts "\n"
     end
@@ -143,11 +143,11 @@ class Game
       case winner_force
       when :human
         humans.each do |p|
-          puts "#{p.display_name} won as #{human} with #{p.display_scores} handshakes"
+          puts "#{p.display_name} won as #{human} with #{p.display_handshakes} handshakes"
         end
       when :zombie
         zombies.each do |p|
-          puts "#{p.display_name} won as #{zombie} by infected #{p.display_scores} players"
+          puts "#{p.display_name} won as #{zombie} by infected #{p.display_infections} players"
         end
       end
     end
@@ -195,6 +195,14 @@ class Player
 
   def display_scores
     Rainbow(scores).bright.white
+  end
+
+  def display_handshakes
+    Rainbow(handshakes).green
+  end
+
+  def display_infections
+    Rainbow(infections).red
   end
 
   def display_antidotes

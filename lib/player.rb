@@ -46,6 +46,14 @@ class Player
     @scores.abs
   end
 
+  def handshakes
+    @scores >= 0 ? @scores : 0
+  end
+
+  def infections
+    @scores <= 0 ? -@scores : 0
+  end
+
   def sorting_scores
     @scores
   end
