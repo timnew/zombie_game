@@ -1,20 +1,4 @@
 describe Player do
-  def human
-    Player.new('human', Player::Human.new)
-  end
-
-  def zombie
-    Player.new('zombie', Player::Zombie.new)
-  end
-
-  def temp_infected
-    Player.new('human', Player::TemporaryInfected.new)
-  end
-
-  def perm_infected
-    Player.new('zombie', Player::PermanentInfected.new)
-  end
-
   describe :interaction do
     before do
       subject.interact(object)
