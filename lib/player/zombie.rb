@@ -15,7 +15,7 @@ class Player
     end
 
     def touch(another_player)
-      player.update_score(+1) if another_player.role.infected
+      player.update_scores(-1) if another_player.role.infected
     end
 
     def handshaked

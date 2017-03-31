@@ -45,11 +45,11 @@ class Game
   end
 
   def top_humans
-    humans.sort_by(&:scores).reverse
+    humans.sort_by(&:sorting_scores).reverse
   end
 
   def top_zombies
-    zombies.sort_by(&:scores).reverse
+    zombies.sort_by(&:sorting_scores)
   end
 
   def finished?

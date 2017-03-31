@@ -35,7 +35,7 @@ describe 'Player actions' do
 
   context :next_turn do
     before do
-      subject.update_score(+5)
+      subject.update_scores(+5)
 
       10.times do
         subject.next_turn

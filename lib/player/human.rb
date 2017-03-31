@@ -19,7 +19,7 @@ class Player
     end
 
     def handshaked
-      player.update_score(+1)
+      player.update_scores(+1)
       true
     end
 

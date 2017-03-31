@@ -6,7 +6,7 @@ class Player
   autoload(:TemporaryInfected, 'player/temporary_infected')
   autoload(:PermanentInfected, 'player/permanent_infected')
 
-  attr_reader :name, :scores, :antidotes, :role
+  attr_reader :name, :antidotes, :role
 
   def initialize(name, role)
     @name = name
@@ -36,11 +36,19 @@ class Player
     @role = role
   end
 
-  def update_score(amount)
+  def scores
+    @scores.abs
+  end
+
+  def sorting_scores
+    @scores
+  end
+
+  def update_scores(amount)
     @scores += amount
   end
 
-  def reset_score
+  def reset_scores
     @scores = 0
   end
 end
