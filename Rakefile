@@ -1,6 +1,7 @@
 require 'yaml'
 require './lib/zombie_game'
 
+desc 'Create the script for a new game'
 task :new_game, [:game_file, :player_config] do |t, args|
   args.with_defaults(game_file: 'game.txt', player_config: 'players.yml')
 
@@ -38,6 +39,7 @@ task :new_game, [:game_file, :player_config] do |t, args|
   sh "cat #{args[:game_file]}"
 end
 
+desc 'Run the game'
 task :run, [:game_file] do |t, args|
   args.with_defaults(game_file: 'game.txt')
 
