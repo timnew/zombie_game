@@ -28,8 +28,8 @@ class Game
     @players[name.downcase]
   end
 
-  def add_player(name, race)
-    @players[name.downcase] = Player.new(name, race)
+  def add_player(name, role)
+    @players[name.downcase] = Player.new(name, role.new)
   end
 
   def zombies

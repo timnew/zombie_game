@@ -24,11 +24,11 @@ class Game
     end
 
     def human(name)
-      game.add_player(name, :human)
+      game.add_player(name, Player::Human)
     end
 
     def zombie(name)
-      game.add_player(name, :zombie)
+      game.add_player(name, Player::Zombie)
     end
 
     def game_start

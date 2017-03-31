@@ -6,22 +6,14 @@ class Player
   autoload(:TemporaryInfected, 'player/temporary_infected')
   autoload(:PermanentInfected, 'player/permanent_infected')
 
-  attr_reader :name, :score, :race, :antidotes, :role
+  attr_reader :name, :score, :antidotes, :role
 
-  def initialize(name, race)
+  def initialize(name, role)
     @name = name
-    @race = race
     @score = 0
     @antidotes = 1
 
-    case race
-    when :human
-      update_role Human.new
-    when :zombie
-      update_role Zombie.new
-    else
-      raise 'Invalid race'
-    end
+    update_role role
   end
 
   delegate [:zombie_like?, :human_like?, :next_round] => :role
