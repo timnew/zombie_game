@@ -6,13 +6,13 @@ class Player
   autoload(:TemporaryInfected, 'player/temporary_infected')
   autoload(:PermanentInfected, 'player/permanent_infected')
 
-  attr_reader :name, :score, :race, :antidote_count, :role
+  attr_reader :name, :score, :race, :antidotes, :role
 
   def initialize(name, race)
     @name = name
     @race = race
     @score = 0
-    @antidote_count = 1
+    @antidotes = 1
 
     case race
     when :human
@@ -26,19 +26,15 @@ class Player
 
   delegate [:zombie_like?, :human_like?, :next_round] => :role
 
-  def antidote?
-    antidote_count > 0
-  end
-
   def interact(another_player)
     role.touch(another_player)
     another_player.role.touch(self)
   end
 
   def apply_antidote
-    return unless @antidote_count > 0
+    return unless @antidotes > 0
 
-    @antidote_count -= 1
+    @antidotes -= 1
 
     role.antidote_applied
   end
@@ -50,5 +46,9 @@ class Player
 
   def update_score(amount)
     @score += amount
+  end
+
+  def reset_score
+    @score = 0
   end
 end

@@ -20,13 +20,16 @@ class Player
 
     def handshaked
       player.update_score(+1)
+      true
     end
 
     def infected
       player.update_role TemporaryInfected.new
+      true
     end
 
     def antidote_applied
+      false
     end
 
     def next_round

@@ -33,6 +33,8 @@ task :new_game, [:game_file, :player_config] do |t, args|
 
 # NEXT_ROUND
 # nr
+
+GAME_START
     EOD
   end
 
@@ -43,10 +45,9 @@ desc 'Run the game'
 task :run, [:game_file] do |t, args|
   args.with_defaults(game_file: 'game.txt')
 
-  game = Game.new
-  dsl = game.dsl
-  dsl.run_script_file(args[:game_file])
-  dsl.report
+  game = Game.new(Game::TerminalReporter)
+  game.dsl.run_script_file(args[:game_file])
+  game.report('Final Result Report')
 end
 
 task :default => [:run]

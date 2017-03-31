@@ -31,6 +31,10 @@ class Game
       game.add_player(name, :zombie)
     end
 
+    def game_start
+      game.report('Game Start Report')
+    end
+
     def interact(player1, player2)
       game.get_player(player1).interact(@game.get_player(player2))
     end
@@ -48,10 +52,6 @@ class Game
       game.next_round
     end
     alias nr next_round
-
-    def report
-      ConsoleReport.new(game).report
-    end
 
     protected
 

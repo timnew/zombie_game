@@ -1,15 +1,23 @@
 class Game
+  extend Forwardable
+
   autoload(:DSL, 'game/dsl')
   autoload(:DSLError, 'game/dsl_error')
-  autoload(:ConsoleReport, 'game/console_report')
+  autoload(:TerminalReporter, 'game/terminal_reporter')
 
-  attr_reader :dsl, :errors
+  attr_reader :round_index, :errors
 
-  def initialize
+  attr_reader :dsl, :reporter
+  delegate [:report] => :reporter
+
+  def initialize(reporter)
+    @round_index = 0
     @errors = []
     @players = {}
 
     @dsl = DSL.new(self)
+    @reporter = reporter.new(self)
+
   end
 
   def players
@@ -32,8 +40,12 @@ class Game
     players.select(&:human_like?)
   end
 
-  def top_human_players
+  def top_humans
     humans.sort_by(&:score).reverse
+  end
+
+  def top_zombies
+    zombies.sort_by(&:score).reverse
   end
 
   def finished?
@@ -44,11 +56,14 @@ class Game
     humans.empty? ? :zombie : :human
   end
 
-  def error(err)
-    errors << err
-  end
-
   def next_round
     players.each(&:next_round)
+    report("Round #{round_index} Report")
+
+    @round_index += 1
+  end
+
+  def error(err)
+    errors << err
   end
 end

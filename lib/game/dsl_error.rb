@@ -10,9 +10,5 @@ class Game
     def message
       'Invalid instruction'
     end
-
-    def print_console
-      puts "[#{Rainbow('Error').bright.red}] #{message}: [#{Rainbow(line_no).blue}] #{Rainbow(line).cyan}"
-    end
   end
 end
