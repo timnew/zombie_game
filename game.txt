@@ -16,11 +16,3 @@ ZOMBIE Suca
 t tim jack
 t mary suca
 a suca
-
-xxxx
-fd
-a
-fd
-as
-fd
-sa

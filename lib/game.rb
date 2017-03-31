@@ -1,6 +1,7 @@
 class Game
   autoload(:DSL, 'game/dsl')
   autoload(:DSLError, 'game/dsl_error')
+  autoload(:ConsoleReport, 'game/console_report')
 
   attr_reader :dsl, :errors
 
@@ -24,11 +25,11 @@ class Game
   end
 
   def zombies
-    players.select(&:zombie?)
+    players.select(&:zombie_like?)
   end
 
   def humans
-    players.select(&:human?)
+    players.select(&:human_like?)
   end
 
   def top_human_players
