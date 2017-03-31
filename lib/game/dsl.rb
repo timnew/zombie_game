@@ -1,8 +1,12 @@
 class Game
   class DSL
-    def self.run_script(game, script)
-      dsl = new(game)
+    def run_script_file(file)
+      File.open(file, 'r') do |f|
+        run_script(f)
+      end
+    end
 
+    def run_script(script)
       script.each do |line|
         args = line.split(' ').compact
 
@@ -12,7 +16,7 @@ class Game
         next if cmd.start_with?('#')
 
         begin
-          dsl.public_send(cmd, *args)
+          public_send(cmd, *args)
         rescue NoMethodError, ArgumentError
           puts "[#{Rainbow('ERROR').red}] Invalid instruction: #{Rainbow(line).cyan}\n"
         end
@@ -46,7 +50,7 @@ class Game
     alias nr next_round
 
     def report
-      game.report
+      ConsoleReport.new(game).report
     end
 
     protected

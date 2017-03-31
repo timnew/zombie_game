@@ -41,8 +41,10 @@ end
 task :run, [:game_file] do |t, args|
   args.with_defaults(game_file: 'game.txt')
 
-  Game.run(args[:game_file])
-      .report
+  game = Game.new
+  dsl = game.dsl
+  dsl.run_script_file(args[:game_file])
+  dsl.report
 end
 
 task :default => [:run]
