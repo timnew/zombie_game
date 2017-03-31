@@ -41,11 +41,11 @@ class Game
   end
 
   def top_humans
-    humans.sort_by(&:score).reverse
+    humans.sort_by(&:scores).reverse
   end
 
   def top_zombies
-    zombies.sort_by(&:score).reverse
+    zombies.sort_by(&:scores).reverse
   end
 
   def finished?
@@ -56,8 +56,8 @@ class Game
     humans.empty? ? :zombie : :human
   end
 
-  def next_round
-    players.each(&:next_round)
+  def next_turn
+    players.each(&:next_turn)
     report("Round #{round_index} Report")
 
     @round_index += 1

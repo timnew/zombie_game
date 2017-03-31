@@ -22,12 +22,12 @@ class Player
       false
     end
 
-    def apply_antidote
+    def antidote_applied
       player.update_role Human.new
       true
     end
 
-    def next_round
+    def next_turn
       @infectness += 1
       player.update_role PermanentInfected.new if @infectness > 3
       player.reset_score

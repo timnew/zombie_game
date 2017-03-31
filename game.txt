@@ -10,7 +10,7 @@ ZOMBIE Mary
 # ANTIDOTE <player>
 # a <player>
 
-# NEXT_ROUND
+# next_turn
 # nr
 
 GAME_START

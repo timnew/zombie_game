@@ -30,7 +30,7 @@ class Player
       false
     end
 
-    def next_round
+    def next_turn
     end
   end
 end

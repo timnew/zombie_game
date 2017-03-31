@@ -6,17 +6,17 @@ class Player
   autoload(:TemporaryInfected, 'player/temporary_infected')
   autoload(:PermanentInfected, 'player/permanent_infected')
 
-  attr_reader :name, :score, :antidotes, :role
+  attr_reader :name, :scores, :antidotes, :role
 
   def initialize(name, role)
     @name = name
-    @score = 0
+    @scores = 0
     @antidotes = 1
 
     update_role role
   end
 
-  delegate [:zombie_like?, :human_like?, :next_round] => :role
+  delegate [:zombie_like?, :human_like?, :next_turn] => :role
 
   def interact(another_player)
     role.touch(another_player)
@@ -37,10 +37,10 @@ class Player
   end
 
   def update_score(amount)
-    @score += amount
+    @scores += amount
   end
 
   def reset_score
-    @score = 0
+    @scores = 0
   end
 end

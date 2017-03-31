@@ -31,8 +31,8 @@ task :new_game, [:game_file, :player_config] do |t, args|
 # ANTIDOTE <player>
 # a <player>
 
-# NEXT_ROUND
-# nr
+# NEXT_TURN
+# nt
 
 GAME_START
     EOD

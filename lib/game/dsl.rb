@@ -48,9 +48,12 @@ class Game
     end
     alias a antidote
 
-    def next_round
-      game.next_round
+    def next_turn
+      game.next_turn
     end
+    alias nt next_turn
+
+    alias next_round next_turn # Backward Compactibility
     alias nr next_round
 
     protected
