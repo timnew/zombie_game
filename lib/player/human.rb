@@ -2,8 +2,8 @@ class Player
   class Human
     attr_accessor :player
 
-    def name
-      'Human'
+    def status
+      :human
     end
 
     def zombie_like?
@@ -33,6 +33,7 @@ class Player
     end
 
     def next_turn
+      false
     end
   end
 end

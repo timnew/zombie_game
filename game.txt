@@ -15,6 +15,7 @@ ZOMBIE Jack
 
 GAME_START 5
 
+i tim suca
 t jack tim
 t mary suca
 t tim mary
@@ -27,7 +28,13 @@ a mary
 nt
 
 t jack suca
-t jack mary
 a suca
 a mary
+nt
+
+nt
+
+nt
+
+t jack mary
 nt

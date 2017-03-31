@@ -16,7 +16,13 @@ class Player
     update_role role
   end
 
-  delegate [:zombie_like?, :human_like?, :next_turn] => :role
+  delegate [:zombie_like?, :human_like?, :next_turn, :status] => :role
+
+  [:human, :zombie, :permanent_infected, :temporary_infected].each do |status_name|
+    define_method(:"#{status_name}?") do
+      status == status_name
+    end
+  end
 
   def interact(another_player)
     role.touch(another_player)

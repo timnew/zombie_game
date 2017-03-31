@@ -6,8 +6,8 @@ class Player
       @infectness = 0
     end
 
-    def name
-      'Temporary Infected'
+    def status
+      :temporary_infected
     end
 
     def touch(another_player)
@@ -29,7 +29,10 @@ class Player
 
     def next_turn
       @infectness += 1
-      player.update_role PermanentInfected.new if @infectness > 3
+      return false unless @infectness > 3
+
+      player.update_role PermanentInfected.new
+      true
     end
   end
 end

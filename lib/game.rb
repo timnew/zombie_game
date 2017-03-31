@@ -36,12 +36,13 @@ class Game
     @players[name.downcase] = Player.new(name, role.new)
   end
 
-  def zombies
-    players.select(&:zombie_like?)
-  end
-
   def humans
     players.select(&:human_like?)
+  end
+
+
+  def zombies
+    players.select(&:zombie_like?)
   end
 
   def top_humans
@@ -50,6 +51,10 @@ class Game
 
   def top_zombies
     zombies.sort_by(&:sorting_scores)
+  end
+
+  def new_permanent_infectes
+    zombies.select(&:permanent_infected?).select{|p| p.role.new? }
   end
 
   def finished?

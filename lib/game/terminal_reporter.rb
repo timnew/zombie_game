@@ -3,7 +3,7 @@ class Game
     extend Forwardable
 
     attr_reader :game, :errors
-    delegate [:players, :humans, :zombies, :top_humans, :top_zombies, :finished?, :winner_force] => :game
+    delegate [:players, :humans, :zombies, :top_humans, :top_zombies, :new_permanent_infectes, :finished?, :winner_force] => :game
 
     def initialize(game)
       @errors = []
@@ -35,6 +35,7 @@ class Game
 
       print_top_humans
       print_top_zombies
+      print_new_permanent_infectes
     end
 
     def final_report
@@ -106,7 +107,7 @@ class Game
     def print_player_list
       puts caption('Players: ')
       players.each do |p|
-        puts "  #{p.display_name}: #{p.role.display_name} A:#{p.display_antidotes} S:#{p.display_scores}"
+        puts "  #{p.display_name}: #{p.role.display_name}  A: #{p.display_antidotes}  S: #{p.display_scores}"
       end
     end
 
@@ -128,6 +129,14 @@ class Game
         puts "  #{p.display_name}: #{p.display_scores} infections"
       end
       puts "\n"
+    end
+
+    def print_new_permanent_infectes
+      return if new_permanent_infectes.empty?
+      puts caption('New permanent infected:')
+      new_permanent_infectes.each do |p|
+        puts "  #{p.display_name} is just #{zombie('permanent infected')}"
+      end
     end
 
     def print_result
@@ -194,23 +203,23 @@ class Player
 
   class Human
     def display_name
-      Rainbow(name).green.bright
+      Rainbow('Human').green.bright
     end
   end
 
   class Zombie
     def display_name
-    Rainbow(name).red.bright
+    Rainbow('Zombie').red.bright
     end
   end
   class TemporaryInfected
     def display_name
-      Rainbow(name).red
+      Rainbow('Temporary Infected').red
     end
   end
   class PermanentInfected
     def display_name
-      Rainbow(name).red.bright
+      Rainbow('Permanent Infected').red.bright
     end
   end
 end
