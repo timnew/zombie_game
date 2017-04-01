@@ -55,7 +55,7 @@ Virus and reinforced infection,
   * Human player without precaution will be infected by reinforced infection as well as losing antibody.
   * Human player with precaution will not be infected by reinforced infection, but will lose antibody.
   * Infected player loses antibody when touched by reinforced infection.
-  * Human/infected player turns =into zombie player immediately if he/she loses all antibody.
+  * Human player get infected if he/she lost all antibody
   * Virus can be transferred from a zombie player to another by applying reinforced infection on another zombie player.
   * Apply reinforced infection on another zombie player won't generates virus for both players as normal interaction.
 
@@ -73,10 +73,9 @@ The turn ends when all players declared `end of the turn`. Then the judge
     * How many virus the player who has most virus has
 
 The game ends, when:
-  * **All players** are turned into Zombies by **the end of the turn**, **zombie** wins. The zombie players and permanent infected players are ranked by their scores!
+  * **All players** are turned into Zombies by **the end of the turn**, **zombie** wins.
   * **Only 1 human** player survives by ** the end of the turn**, **human** wins. The survivor wins.
-  * Game reaches the maximum turns, **human** wins. The human players are ranked by their scores.
-
+  * Game reaches the maximum turns, **human** wins. The human players are ranked by their antibodies.
 
 ## How to use the code
 
@@ -120,7 +119,7 @@ $ rake
 ```
 
 ### Watch script change
-If you want the simualtion run automatically after script changed, use following script
+If you want the simulation run automatically after script changed, use following script
 ```
 $ guard
 ```
