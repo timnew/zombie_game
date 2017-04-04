@@ -29,7 +29,8 @@ class Player
 
     def next_turn
       @infectness += 1
-      return false unless @infectness > 3
+
+      return false unless @infectness < player.game.antidote_limit
 
       player.update_role PermanentInfected.new
       true

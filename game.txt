@@ -1,8 +1,8 @@
 # Player List
 HUMAN Tim
-HUMAN Mary
-HUMAN Suca
-ZOMBIE Jack
+HUMAN David
+HUMAN Jason
+ZOMBIE Kiril
 
 # TOUCH <player>
 # t <player>
@@ -13,28 +13,13 @@ ZOMBIE Jack
 # NEXT_TURN
 # nt
 
-GAME_START 5
-
-i tim suca
-t jack tim
-t mary suca
-t tim mary
-a tim
-nt
-
-t jack mary
-t tim jack
-a mary
-nt
-
-t jack suca
-a suca
-a mary
-nt
+GAME_START 6 3
 
 nt
-
+t tim david
 nt
-
-t jack mary
+nt
+nt
+nt
+nt
 nt

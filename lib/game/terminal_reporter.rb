@@ -3,7 +3,7 @@ class Game
     extend Forwardable
 
     attr_reader :game, :errors
-    delegate [:players, :humans, :zombies, :top_humans, :top_zombies, :new_permanent_infectes, :finished?, :winner_force] => :game
+    delegate [:players, :humans, :zombies, :top_humans, :top_zombies, :new_permanent_infectes, :winner_force] => :game
 
     def initialize(game)
       @errors = []
@@ -11,7 +11,7 @@ class Game
     end
 
     def error?
-      !errors.empty?
+      errors.any?{ |e| e.instance_of?(DSLError) }
     end
 
     def initial_report
@@ -38,28 +38,6 @@ class Game
       print_new_permanent_infectes
     end
 
-    def final_report
-      return error_report if error?
-      return unless game.finished?
-
-      print_hr
-      puts
-
-      print_title('Game finished')
-
-      print_player_list
-      print_player_division
-
-      print_top_humans
-      print_top_zombies
-
-      print_hr
-      puts
-
-      print_result
-      puts
-    end
-
     def report
       return error_report if error?
       print_hr
@@ -72,16 +50,7 @@ class Game
 
       print_top_humans
       print_top_zombies
-
-      return unless game.finished?
-
-      print_hr
-      puts
-
-      print_result
-      puts
     end
-
 
     def error_report
       print_hr
@@ -107,7 +76,7 @@ class Game
     def print_player_list
       puts caption('Players: ')
       players.each do |p|
-        puts "  #{p.display_name}: #{p.role.display_name}  A: #{p.display_antidotes}  S: #{p.display_scores}"
+        puts "  #{p.display_name}: #{p.role.display_name}  A: #{p.display_antidotes}  S: #{p.display_scores}  I: #{p.display_interact_limit}"
       end
     end
 
@@ -186,6 +155,12 @@ class Game
       "#{message}: [#{Rainbow(line_no).blue}] #{Rainbow(line).cyan}"
     end
   end
+
+  class InvalidInteractionError < RuntimeError
+    def display_message
+      "#{message}: [#{Rainbow(line_no).blue}] #{player_names.map{|n| Rainbow(n).cyan}.join(', ')}"
+    end
+  end
 end
 
 class Player
@@ -207,6 +182,10 @@ class Player
 
   def display_antidotes
     Rainbow(antidotes).bright.blue
+  end
+
+  def display_interact_limit
+    Rainbow(interact_limit).cyan
   end
 
   class Human

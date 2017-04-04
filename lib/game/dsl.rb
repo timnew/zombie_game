@@ -17,8 +17,11 @@ class Game
 
         begin
           public_send(cmd, *args)
-        rescue NoMethodError, ArgumentError
-          game.append_error DSLError.new(line, line_no)
+        rescue InvalidInteractionError => ex
+          ex.line_no = line_no
+          game.append_error ex
+        # rescue NoMethodError, ArgumentError
+          # game.append_error DSLError.new(line, line_no)
         end
       end
     end
@@ -31,8 +34,8 @@ class Game
       game.add_player(name, Player::Zombie)
     end
 
-    def game_start(total_turn)
-      game.start(total_turn.to_i)
+    def game_start(interation_turn_limit, antidote_turn_limit)
+      game.start(interation_turn_limit.to_i, antidote_turn_limit.to_i)
     end
 
     def interact(player1, player2)

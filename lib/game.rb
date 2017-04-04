@@ -4,8 +4,9 @@ class Game
   autoload(:DSL, 'game/dsl')
   autoload(:DSLError, 'game/dsl_error')
   autoload(:TerminalReporter, 'game/terminal_reporter')
+  autoload(:InvalidInteractionError, 'game/invalid_interaction_error')
 
-  attr_reader :turn_index, :total_turns, :errors
+  attr_reader :turn_index, :interation_limit, :antidote_limit, :errors
 
   attr_reader :dsl, :reporter
   delegate [:report, :append_error] => :reporter
@@ -19,8 +20,12 @@ class Game
     @reporter = reporter.new(self)
   end
 
-  def start(total_turns)
-    @total_turns = total_turns
+  def start(interation_limit, antidote_limit)
+    @interation_limit = interation_limit
+    @antidote_limit = antidote_limit
+
+    players.each(&:reset_interact_limit)
+
     reporter.initial_report
   end
 
@@ -33,7 +38,7 @@ class Game
   end
 
   def add_player(name, role)
-    @players[name.downcase] = Player.new(name, role.new)
+    @players[name.downcase] = Player.new(self, name, role.new)
   end
 
   def humans
@@ -57,22 +62,14 @@ class Game
     zombies.select(&:permanent_infected?).select{|p| p.role.new? }
   end
 
-  def finished?
-    turn_index >= total_turns || humans.one? || humans.empty?
-  end
-
   def winner_force
     humans.empty? ? :zombie : :human
   end
 
   def next_turn
-    return if finished?
-
     players.each(&:next_turn)
     reporter.turn_report(turn_index)
 
     @turn_index += 1
-
-    reporter.final_report if finished?
   end
 end
